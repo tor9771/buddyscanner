@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="Content-type" name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">
+    <title>Buddy Scanner</title>
+
+    <link rel="stylesheet" href="jquery.mobile/themes/turtoise.min.css" />
+    <link rel="stylesheet" href="jquery.mobile/jquery.mobile.structure-1.1.0.min.css" />
+    <link rel="stylesheet" href="index.css" /> 
+
+    <script type="text/javascript" src="jquery.mobile/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="jquery.mobile/jquery.mobile-1.1.0.min.js"></script>
+    <script type="text/javascript" src="jquery.zoomooz.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="cordova-1.6.0.js"></script>
+	<script type="text/javascript" src="config.js"></script>
+    <script type="text/javascript" src="index.js"></script>
+  </head>
+  
+  <body class="ui-body ui-body-a">
+
+        <div data-role="page" id="start" data-add-back-btn="true" class="fullheight" data-theme="a">
+        
+            <div data-role="header" data-position="fixed" data-theme="a">
+                <h1></h1>
+                <!-- <a href="index.html" data-icon="gear" class="ui-btn-right">Options</a> -->
+            </div><!-- /header -->
+        
+            <div data-role="content" class="centered fullheight" data-theme="a">    
+                <div class="start_background"><img src="media/bg.png" alt="" /></div>
+                <h1 class="maintitle">Buddy Scanner</h1>
+                <p>Taka a picture of a person or a group of people to start.<br /></p>
+                <div class="ui-grid-a">
+                    <div class="ui-block-a"><button class="send-image" value="camera">Camera</button></div>
+                    <div class="ui-block-b"><button class="send-image" value="library">Gallery</button></div>
+                </div>
+                <div>
+                    <p id="face_server" class="hidden">Contacting server...</p>
+                    <p id="face_server_error" class="hidden"></p>
+                </div>
+            </div><!-- /content -->
+        
+            <div data-role="footer" data-position="fixed" data-theme="a">
+                    <div data-role="navbar">
+                        <ul>
+                            <li><a class="plain" href="#" id="start_debug">Debug</a></li>
+                            <li><a class="plain" href="javascript:return" id="start_debug_offline">Debug offline</a></li>
+                            <li><a class="plain" href="#" id="start_reload">Refresh</a></li>
+                            <li><a class="plain" href="#result" data-transition="slide" id="start_forward">Forward</a></li>
+                        </ul>
+                    </div><!-- /navbar -->
+            </div><!-- /footer -->
+        </div><!-- /page -->
+        
+        
+        <div data-role="page" id="result" data-add-back-btn="true" class="fullheight" data-theme="a">
+        
+            <div data-role="header" data-position="fixed" data-theme="a">
+                <h1>Buddy Scanner</h1>
+                <!-- <a href="index.html" data-icon="gear" class="ui-btn-right">Options</a> -->
+            </div><!-- /header -->
+
+            <!-- <div data-role="header">
+                <a href="#start" data-role="button" data-rel="back" data-icon="arrow-l" data-transition="slide" data-iconpos="notext" data-direction="reverse">Start over</a> <h1>Buddy Scanner</h1>
+            </div><!-- /header -->
+        
+            <div data-role="content" data-theme="a" class="centered fullheight nomargin" >
+                <div class="face_result">
+                    <p class="hidden">Found <span class="face_count">0</span> faces.</p>
+                    <div class="face_list_image_container">
+                       <div class="face_list_image"><img id="face_image" src="" alt="(picture)" /></div>
+                    </div>
+                    <div class="face_list_data_container"> 
+                       <div class="face_list_prev"><a id="face_list_prev_button"><img src="media/prev.png" alt="previous" /></a></div>
+                       <div class="face_list_next"><a id="face_list_next_button"><img src="media/next.png" alt="next" /></a></div>
+                       <div class="face_list">
+                            <div class"face_list_number face_list_entry_active" id="face_list_0">
+                                <h2 class="face_number_title">Faces found: <span class="face_count">0</span></h2>
+                                <p>Use left and right arrows<br /> to get details</p>
+                            </div>
+                       </div>
+                       <div class="face_list_cleaner">&#160;</div>
+                    </div>
+                </div>
+                <div class="face_list_template">
+                    <h2 class="face_number_title">Face <span class="face_number">0</span> of <span class="face_count">0</span></h2>
+                    <p class="face_list_attribute">Gender: <span class="gender"></span></p>
+                    <p class="face_list_attribute">Age: <span class="age_est"></span> (<span class="age_min"></span> - <span class="age_max"></span>)</p>
+                    <p class="face_list_attribute">Glasses: <span class="glasses"></span></p>
+                    <p class="face_list_attribute">Lips: <span class="lips"></span></p>
+                    <p class="face_list_attribute">Mood: <span class="mood"></span></p>
+                    <p class="face_list_attribute">Smiling: <span class="smiling"></span></p>
+                </div>
+                <div class="face_list_template_none">
+                    <p>No faces were found in this image. <a href="#start" data-rel="back">Try again.</a></p>
+                </div>
+                <div class="face_list_number_template"><h3 class="face_number">0</h3></div>
+            </div><!-- /content -->
+        
+            <div data-role="footer" data-position="fixed" data-theme="a">
+               <div class="facecom">
+                <a href="http://face.com/" title="Face Recognition by face.com" class="facecom">
+                  <img src="http://static.face.com/badges/badge_1_dark_bg.png" border="0" alt="Face Recognition by face.com">
+                </a>
+               </div>
+            </div><!-- /footer -->
+        </div><!-- /page -->
+
+  </body>
+</html>
