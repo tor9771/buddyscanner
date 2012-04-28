@@ -36,10 +36,10 @@ $(document).ready(function() {
                 else {
                     // change page (and get back to default status on first page)
                     $('#face_server').hide();
-                    
-                    // reset result page
+                    $('.face_list_none').hide();
+                    $('.face_list_some').show();
                     $('.face_list_number').remove();
-                    $(".face_list_entry").remove()
+                    $(".face_list_entry").remove();
                     
                     if (imageData)
                         //$('#face_image').attr('src', 'data:image/jpeg;base64,' + imageData);
@@ -72,16 +72,15 @@ $(document).ready(function() {
                     }
                     
                     if (face_tags.length==0) {
-                        $('.face_list').append($('.face_list_template_none'));
-                        $('#face_list_number_0').hide();
-                        $('.face_list_template_none').show();
+                        $('.face_list_some').hide();
+                        $('.face_list_none').show();
                     }
 
                     // show result page
                     $.mobile.changePage('#result', {transition: "slide", reverse: false });
 
                     // display first face
-                    if (face_tags.length>0) face_list_entry(0);
+                    face_list_entry(0);
                     
                     $('#face_image').load(function() { image_face_positions(face_tags); });
                 }
@@ -238,7 +237,11 @@ $(document).ready(function() {
 
     // events
 
-    $('.send-image').click(function () { sendImage($(this).val());  }); 
+    $('.send-image').click(function () {
+        $('.send-image').addClass('ui-disabled'); 
+        sendImage($(this).val());
+        $('.send-image').removeClass('ui-disabled');
+    }); 
     $('#start_reload').click(function () { location.reload();  }); 
     $('#start_debug').click(function () { sendImage("url");  }); 
     $('#start_debug_offline').click(function () { sendImage("url_offline" );  });
@@ -263,5 +266,8 @@ $(document).ready(function() {
             $('.face_list_next img').height(0.8*$('.face_list').height());
         }
     });
+    
+    // gui adjustments
+    if (CONFIG_debug) $('.debug').show();
         
 });

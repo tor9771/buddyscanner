@@ -11,7 +11,7 @@
     <script type="text/javascript" src="jquery.mobile/jquery-1.7.1.min.js"></script>
     <script type="text/javascript" src="jquery.mobile/jquery.mobile-1.1.0.min.js"></script>
     <script type="text/javascript" src="jquery.zoomooz.min.js"></script>
-    <script type="text/javascript" charset="utf-8" src="cordova-1.6.0.js"></script>
+    <script type="text/javascript" charset="utf-8" src="cordova-1.7.0rc1.js"></script>
 	<script type="text/javascript" src="config.js"></script>
     <script type="text/javascript" src="index.js"></script>
   </head>
@@ -40,7 +40,7 @@
             </div><!-- /content -->
         
             <div data-role="footer" data-position="fixed" data-theme="a">
-                    <div data-role="navbar">
+                    <div data-role="navbar" class="debug">
                         <ul>
                             <li><a class="plain" href="#" id="start_debug">Debug</a></li>
                             <li><a class="plain" href="javascript:return" id="start_debug_offline">Debug offline</a></li>
@@ -75,7 +75,11 @@
                        <div class="face_list">
                             <div class"face_list_number face_list_entry_active" id="face_list_0">
                                 <h2 class="face_number_title">Faces found: <span class="face_count">0</span></h2>
-                                <p>Use left and right arrows<br /> to get details</p>
+                                <p class="face_list_some">Use left and right arrows<br /> to get details</p>
+                                <p class="face_list_none">
+                                  No faces found in this image.
+                                  <!-- <a href="#start" data-rel="back">Try again.</a> -->
+                                </p>
                             </div>
                        </div>
                        <div class="face_list_cleaner">&#160;</div>
@@ -89,9 +93,6 @@
                     <p class="face_list_attribute">Lips: <span class="lips"></span></p>
                     <p class="face_list_attribute">Mood: <span class="mood"></span></p>
                     <p class="face_list_attribute">Smiling: <span class="smiling"></span></p>
-                </div>
-                <div class="face_list_template_none">
-                    <p>No faces were found in this image. <a href="#start" data-rel="back">Try again.</a></p>
                 </div>
                 <div class="face_list_number_template"><h3 class="face_number">0</h3></div>
             </div><!-- /content -->
