@@ -86,7 +86,8 @@ p.face_list_attribute {
 
 #face_image {
     width:100%;
-    overflow:hidden;
+    max-width:100%;
+    max-height:100%;
     }
 
 .face_list_image {

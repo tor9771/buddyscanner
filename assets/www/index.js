@@ -30,7 +30,11 @@ $(document).ready(function() {
                 $.mobile.hidePageLoadingMsg();
                 
                 if (data['status']!='success') {
-                    $('#face_server_error').html("An error has occurred: Code = " + data['error_code'] + "(" + data['error_message'] + ")");
+                    if (CONFIG_debug) 
+                        $('#face_server_error').html("An error has occurred: Code = " + data['error_code'] + "(" + data['error_message'] + ")");
+                    else
+                        $('#face_server_error').html("An error has occurred. PLease try again.");
+                                        
                     $('#face_server_error').show();
                 }
                 else {
@@ -115,6 +119,12 @@ $(document).ready(function() {
                         $('.face_list_image_container .face_list_number_template').addClass("face_list_number");
                         $('.face_list_image_container .face_list_number_template').removeClass("face_list_number_template");
                     }
+                    // make faces clickable
+                    $('.face_list_number').click(function(evt) {
+                        id=$(this).attr("id");
+                        number=id.substring(id.lastIndexOf("_")+1,id.length);
+                        face_list_entry(number);
+                    });
             
                 }
          }
@@ -135,6 +145,8 @@ $(document).ready(function() {
             // clear error messages
             $('#face_server_error').html("");
             $('#face_server_error').hide();
+            $.mobile.loadingMessageTextVisible = true;
+            $.mobile.loadingMessage = "working...";
             
             if (src == 'url' || src == 'url_offline') {
                 params['urls']=face_url;
@@ -152,12 +164,12 @@ $(document).ready(function() {
                 options.mimeType="image/jpeg";
     
                 options.params = params;
-                options.chunkedMode = false;
+                //options.chunkedMode = false;
     
                 var ft = new FileTransfer();
                 //$('#face_server').show();
                 $.mobile.showPageLoadingMsg("a","working...");
-                ft.upload(imageData, url, success_fileupload, fail_fileupload, options);
+                ft.upload(imageData, url, success_fileupload, fail_fileupload, options, true);  // the last parameter was added to avoid error=3 for file uploads, dont know if it will help
             }
             
         }
@@ -252,7 +264,6 @@ $(document).ready(function() {
     $('.face_list_data_container').swipeleft(function () { face_list_entry("next");  });
     $('.face_list_data_container').swiperight(function () { face_list_entry("prev");  });
 
-    //$('.zoomTarget').click(function(evt) { $(this).zoomTo({root: $('.face_result')}); evt.stopPropagation(); });
     //$('body').click(function(evt) { $(this).zoomTo({targetsize:1.0}); evt.stopPropagation(); });
 
     // gui events
