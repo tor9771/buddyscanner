@@ -3,6 +3,7 @@ $(document).ready(function() {
     // global vars
     var face_number = 0;                // current face displayed
     var face_tags = new Array();        // face tags (attributes etc)
+    var phonegap_deviceready=false;     // set variable for phonegap initialization complete
 
     function sendImage(src_) {
         var src=src_;  // assign to global variable
@@ -22,24 +23,20 @@ $(document).ready(function() {
         }
         function fail_fileupload(error) {
             $.mobile.hidePageLoadingMsg();
-            $('#face_server_error').html("An error has occurred: Code = " + error.code + "(" + error.message + ")");
+            if (CONFIG_debug) $('#face_server_error').html("An error has occurred: Code = " + error.code + "(" + error.message + ")");
             $('#face_server_error').show();
+            check_networkstate();  // maybe there is a problem with the internet connection
         }
 
         function success_upload(data) {
                 $.mobile.hidePageLoadingMsg();
                 
                 if (data['status']!='success') {
-                    if (CONFIG_debug) 
-                        $('#face_server_error').html("An error has occurred: Code = " + data['error_code'] + "(" + data['error_message'] + ")");
-                    else
-                        $('#face_server_error').html("An error has occurred. PLease try again.");
-                                        
+                    if (CONFIG_debug) $('#face_server_error').html("An error has occurred: Code = " + data['error_code'] + "(" + data['error_message'] + ")");
                     $('#face_server_error').show();
                 }
                 else {
                     // change page (and get back to default status on first page)
-                    $('#face_server').hide();
                     $('.face_list_none').hide();
                     $('.face_list_some').show();
                     $('.face_list_number').remove();
@@ -143,14 +140,12 @@ $(document).ready(function() {
             };
             
             // clear error messages
-            $('#face_server_error').html("");
             $('#face_server_error').hide();
             $.mobile.loadingMessageTextVisible = true;
             $.mobile.loadingMessage = "working...";
             
             if (src == 'url' || src == 'url_offline') {
                 params['urls']=face_url;
-                //$('#face_server').show();
                 $.mobile.showPageLoadingMsg("a","working...");
                 if (src == 'url_offline')
                     success_upload(debug_post_offline());
@@ -167,7 +162,6 @@ $(document).ready(function() {
                 //options.chunkedMode = false;
     
                 var ft = new FileTransfer();
-                //$('#face_server').show();
                 $.mobile.showPageLoadingMsg("a","working...");
                 ft.upload(imageData, url, success_fileupload, fail_fileupload, options, true);  // the last parameter was added to avoid error=3 for file uploads, dont know if it will help
             }
@@ -261,12 +255,31 @@ $(document).ready(function() {
     $('#face_list_prev_button').click(function () { face_list_entry("prev");  });
     $('#face_list_next_button').click(function () { face_list_entry("next");  });
     
-    $('.face_list_data_container').swipeleft(function () { face_list_entry("next");  });
-    $('.face_list_data_container').swiperight(function () { face_list_entry("prev");  });
+    $('.face_result').swipeleft(function () { face_list_entry("next");  });
+    $('.face_result').swiperight(function () { face_list_entry("prev");  });
+    //$('.face_list_data_container').swipeleft(function () { face_list_entry("next");  });
+    //$('.face_list_data_container').swiperight(function () { face_list_entry("prev");  });
 
     //$('body').click(function(evt) { $(this).zoomTo({targetsize:1.0}); evt.stopPropagation(); });
+    
 
     // gui events
+
+    // from phonegap documentation
+    document.addEventListener('deviceready', function () {
+        phonegap_deviceready=true;
+    }, false);
+
+    // check network state
+    function check_networkstate() {
+        if (phonegap_deviceready != true) return false; 
+        if (navigator.network.connection.type==Connection.NONE)
+            $('#face_server_error_nonetwork').show();
+        else
+            $('#face_server_error_nonetwork').hide();
+    }
+    
+    $('#result').live('pageshow', function () { check_networkstate(); });
     
     // adjust height of prev/next links
     $('#result').live('pageshow', function () {
@@ -278,7 +291,10 @@ $(document).ready(function() {
         }
     });
     
+
+    
     // gui adjustments
+    
     if (CONFIG_debug) $('.debug').show();
         
 });

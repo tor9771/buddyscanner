@@ -18,7 +18,6 @@
 .right {
     text-align: right;
     }
-    
 
 .hidden {
     display: none;
@@ -67,6 +66,10 @@ h1.maintitle {
 
 .face_list_template, .face_list_number_template, .face_list_entry, .face_list_template_none {
     display:none;
+}
+
+#face_server_error_nonetwork {
+    font-style:italic;
 }
 
 .face_list_template_none {
