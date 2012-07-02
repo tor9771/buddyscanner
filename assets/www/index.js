@@ -180,9 +180,9 @@ $(document).ready(function() {
         else {
             // Set the image source [library || camera]
             if (src == 'library')
-                navigator.camera.getPicture(success_picture, fail_picture, {correctOrientation: true, sourceType: Camera.PictureSourceType.PHOTOLIBRARY, destinationType: navigator.camera.DestinationType.FILE_URI});
+                navigator.camera.getPicture(success_picture, fail_picture, {correctOrientation: true, sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY, destinationType: navigator.camera.DestinationType.FILE_URI});
             else
-                navigator.camera.getPicture(success_picture, fail_picture, {quality: 75, targetWidth: 1280, targetHeight: 1280, correctOrientation: true, sourceType: Camera.PictureSourceType.CAMERA, destinationType: navigator.camera.DestinationType.FILE_URI});
+                navigator.camera.getPicture(success_picture, fail_picture, {quality: 75, targetWidth: 1600, targetHeight: 1200, correctOrientation: true, saveToPhotoAlbum: true, sourceType: navigator.camera.PictureSourceType.CAMERA, destinationType: navigator.camera.DestinationType.FILE_URI});
         }
     }
     
